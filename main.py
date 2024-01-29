@@ -32,7 +32,7 @@ class Prover(Agent):
         self.r = None  # Generated at the start each iteration of zero knowledge interaction
         self.C = None  # Generated at the start each iteration of zero knowledge interaction
         self.verifiers_challenge_choice = None
-        print(f"\n*** Prover initialisation ***\np = {self.p} <-- the prime number (divisor in the mod) \n"
+        print(f"\nProver initialisation\np = {self.p} <-- the prime number (divisor in the mod) \n"
               f"g = {self.g} <-- the base of the exponential of the number in the mod\n"
               f"x = {self.x} <-- the exponential of the number in the mod, i.e. THE SECRET")
         print(f"y = g^x mod p = {self.g}^{self.x} mod {self.p} = {self.y}")
@@ -67,15 +67,6 @@ class Verifier(Agent):
         # False if they pick that they want r
         return self.choice
 
-    @staticmethod
-    def confidence_level(result, round_number):
-        if result:
-            conf_level = 1 - 0.5 ** round_number
-            print(f"*** Verifier ***\nPass, confidence level = {conf_level * 100}%")
-        else:
-            print(f"*** Verifier ***\nFail, confidence level = 0%")
-            sys.exit()
-
     def verify(self, prover_response):
         if self.choice:
             w = prover_response
@@ -94,6 +85,15 @@ class Verifier(Agent):
                 self.share(verifier_result="Fail")
                 return False
 
+    @staticmethod
+    def confidence_level(result, round_number):
+        if result:
+            conf_level = 1 - 0.5 ** round_number
+            print(f"Pass, confidence level = {conf_level * 100}%")
+        else:
+            print(f"Fail, confidence level = 0%")
+            sys.exit()
+
 
 if __name__ == '__main__':
     prover = Prover()
@@ -107,7 +107,7 @@ if __name__ == '__main__':
     result = None
 
     while result is not False and round_number <= verifier.number_of_rounds:
-        prover.share(header_text="commitment value (C)", C=prover.pick_random_r_and_calc_C())
+        prover.share(header_text="Commitment value, C", C=prover.pick_random_r_and_calc_C())
         verifier.C = prover.pick_random_r_and_calc_C()
 
         verifier_challenge_choice = verifier.choose_challenge()
