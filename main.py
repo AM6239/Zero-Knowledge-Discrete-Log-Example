@@ -97,7 +97,7 @@ class Verifier(Agent):
 
 if __name__ == '__main__':
     prover = Prover()
-    verifier = Verifier(10)
+    verifier = Verifier(number_of_rounds=10)
 
     prover.share(header_text="initialisation values (p, g and y)", p=prover.p, g=prover.g, y=prover.y)
     verifier.p, verifier.g, verifier.y = prover.p, prover.g, prover.y
