@@ -26,14 +26,14 @@ class Prover(Agent):
         MIN_PRIME = 2 ** 20  # ensure the prime number is large to ensure the mod problem is non-trivial
         MAX_PRIME = MIN_PRIME * 2
         self.p = sympy.randprime(MIN_PRIME, MAX_PRIME)  # generate the prime number (divisor in the mod)
-        self.g = random.randrange(2, self.p)  # create a random integer as the base of the exponential, ensuring its not 1
+        self.g = random.randrange(2, self.p)  # the generator, i.e. create a random integer as the base of the exponential, ensuring its not 1
         self.x = random.randrange(0, self.p - 1)  # generate the secret e.g. password
         self.y = self.g ** self.x % self.p
         self.r = None  # Generated at the start each iteration of zero knowledge interaction
         self.C = None  # Generated at the start each iteration of zero knowledge interaction
         self.verifiers_challenge_choice = None
         print(f"\nProver initialisation\np = {self.p} <-- the prime number (divisor in the mod) \n"
-              f"g = {self.g} <-- the base of the exponential of the number in the mod\n"
+              f"g = {self.g} <-- the generator, i.e. the base of the exponential of the number in the mod\n"
               f"x = {self.x} <-- the exponential of the number in the mod, i.e. THE SECRET")
         print(f"y = g^x mod p = {self.g}^{self.x} mod {self.p} = {self.y}")
 
